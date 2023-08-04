@@ -1,18 +1,43 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { toast } from 'react-hot-toast/headless'
 
 export default function LoginPage() {
 	const [user, setUser] = useState({
 		email: '',
 		password: '',
 	})
+	const [buttonDisabled, setButtonDisabled] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
+	const router = useRouter()
+
+	useEffect(() => {
+		setButtonDisabled(user.email === '' || user.password === '' ? true : false)
+	}, [user])
 
 	const handleSignUp = async (e: React.FormEvent) => {
-		e.preventDefault()
+		try {
+			e.preventDefault()
+			setButtonDisabled(true)
+			setIsLoading(true)
+
+			const response = await axios.post('/api/users/login', user)
+			// console.log(response.data)
+			router.push('/')
+		} catch (error: any) {
+			toast.error(error.message)
+			console.log(error)
+		} finally {
+			setUser({
+				email: '',
+				password: '',
+			})
+			setIsLoading(false)
+		}
 	}
 	return (
 		<section className='h-screen  bg-gray-50 dark:bg-gray-900'>
