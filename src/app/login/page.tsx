@@ -27,7 +27,7 @@ export default function LoginPage() {
 
 			const response = await axios.post('/api/users/login', user)
 			// console.log(response.data)
-			router.push('/')
+			router.push('/profile')
 		} catch (error: any) {
 			toast.error(error.message)
 			console.log(error)
@@ -93,27 +93,7 @@ export default function LoginPage() {
 								/>
 							</div>
 
-							<div className='flex items-center justify-between'>
-								{/* Remember Me */}
-								<div className='flex items-start'>
-									<div className='flex items-center h-5'>
-										<input
-											id='remember'
-											aria-describedby='remember'
-											type='checkbox'
-											className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800'
-											required
-										/>
-									</div>
-									<div className='ml-3 text-sm'>
-										<label
-											htmlFor='remember'
-											className='text-gray-500 dark:text-gray-300'>
-											Remember me
-										</label>
-									</div>
-								</div>
-
+							<div className='flex items-center justify-end'>
 								{/* Forgot Password */}
 								<Link
 									href='/'
